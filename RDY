@@ -1,0 +1,702 @@
+#!/bin/bash
+
+clear
+if [ $(id -u) -eq 0 ]
+then
+	clear
+else
+	if echo $(id) |grep sudo > /dev/null
+	then
+	clear
+	echo -e "\033[1;37mVocê não é root"
+	echo -e "\033[1;37mSeu usuário está no grupo sudo"
+	echo -e "\033[1;37mPara tornar-se um usuário root execute \033[1;31msudo su\033[1;37m ou execute \033[1;31msudo $0\033[0m"
+	exit
+	else
+	clear
+	echo -e "Você não está como usuario root, nem com seus direitos (sudo)\nPara tornar-se um usuário root execute \033[1;31msu\033[0m e digite sua senha root"
+	exit
+	fi
+fi
+
+# SETTINGS
+
+
+cat -n /etc/issue |grep 1 |cut -d' ' -f6,7,8 |sed 's/1//' |sed 's/	//' > /etc/so 
+
+ip=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+if [[ "$ip" = "" ]]; then
+
+ip=$(wget -qO- ipv4.icanhazip.com)
+
+fi
+
+DIR=/usr/lib/klibc/bin/
+FILE=$ip
+
+if [ -e "$DIR$FILE" ] ; then
+echo ""
+history -c
+clear
+else
+echo -e "\033[1;31mERROR! SCRIPT PIRATE!\033[0m"
+history -c
+sleep 1
+fi
+
+
+# RDY FUNCTIONS
+
+rdyconfigdropbear(){
+echo "# © RDY SOFTWARE | 2016 - 2017 All rights reserved";
+
+}
+
+sshd_config(){ echo "# © RDY SOFTWARE | 2016 - 2017 All rights reserved
+#
+Port 22
+Port 443
+Protocol 2
+KeyRegenerationInterval 3600
+ServerKeyBits 1024
+SyslogFacility AUTH
+LogLevel INFO
+LoginGraceTime 120
+PermitRootLogin yes
+StrictModes yes
+RSAAuthentication yes
+PubkeyAuthentication yes
+IgnoreRhosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+PasswordAuthentication yes
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+#UseLogin no
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes" > /etc/ssh/sshd_config
+}
+
+rdyopenssh(){
+echo "Not working";
+}
+
+rdydropbear(){
+
+clear
+
+echo ""
+
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;36mIniciando configuração DropBear\033[0m"
+echo ""
+
+sleep 2
+
+echo -e "\033[1;32mQual porta deseja usar? (Padrão: 22, 443) \033[0m"
+
+read -p "PORTA: " -e -i 80 pts
+if [ "$pts" = "" ]; then
+porta="80"
+else
+ if [ "$pts" = "22" ]; then
+echo -e "\033[1;31mPORTA 22 DESTINADA A GERENCIAMENTO DA VPS\033[0m"
+ else
+   if [ "$pts" = "443" ]; then
+echo -e "\033[1;31mPORTA 443 JA VEM ABERTA!\033[0m"
+porta="80"
+ else
+porta="$pts"
+    fi
+  fi
+fi
+echo "$porta" >> /tmp/portas
+echo "443" >> /tmp/portas
+
+echo -e "\033[1;31mConfigurando... \033[0m"
+
+apt-get update > /dev/null 2> /dev/null
+apt-get install dropbear > /dev/null 2> /dev/null
+
+touch /etc/dropbear/banner
+printf "#loading\nNO_START=0\nDROPBEAR_PORT=$porta\n" > /etc/default/dropbear
+echo -e 'DROPBEAR_EXTRA_ARGS="-p 443"' >> /etc/default/dropbear
+
+service dropbear restart > /dev/null 2> /dev/null
+
+echo "/bin/false" > /etc/shells > /dev/null 2> /dev/null
+
+service dropbear restart > /dev/null 2> /dev/null
+
+/etc/init.d/dropbear restart > /dev/null 2> /dev/null
+
+echo -e "\033[1;32mConcluído! \033[0m"
+
+}
+
+rdysocks(){
+
+clear
+
+echo ""
+
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;36mStart PythonSocks\033[0m"
+echo ""
+echo -e "\033[1;31mVerificando... \033[0m"
+
+sleep 2
+
+abobora=/bin/
+verde=proxy.py
+rosa=proxy8080.py
+preto=proxy8799.py
+azul=proxy3128.py
+
+sshd_config
+
+if [ -e "$abobora$verde" ] ; then
+echo -e "\033[1;32mPort 80 OK √ \033[0m"
+history -c
+else
+echo -e "\033[1;31mBaixando arquivos para porta 80...\033[0m"
+wget -P /bin https://raw.githubusercontent.com/RDY8799/SSHNation/master/proxy.py > /dev/null 2> /dev/null
+history -c
+fi
+
+if [ -e "$abobora$rosa" ] ; then
+echo -e "\033[1;32mPort 8080 OK √ \033[0m"
+history -c
+else
+echo -e "\033[1;31mBaixando arquivos para porta 8080...\033[0m"
+wget -P /bin https://raw.githubusercontent.com/RDY8799/SSHNation/master/proxy8080.py > /dev/null 2> /dev/null
+history -c
+fi
+
+if [ -e "$abobora$preto" ] ; then
+echo -e "\033[1;32mPort 8799 OK √ \033[0m"
+history -c
+else
+echo -e "\033[1;31mBaixando arquivos para porta 8799...\033[0m"
+wget -P /bin https://raw.githubusercontent.com/RDY8799/SSHNation/master/proxy8799.py > /dev/null 2> /dev/null
+history -c
+fi
+
+if [ -e "$abobora$azul" ] ; then
+echo -e "\033[1;32mPort 3128 OK √ \033[0m"
+history -c
+else
+echo -e "\033[1;31mBaixando arquivos para porta 3128...\033[0m"
+wget -P /bin https://raw.githubusercontent.com/RDY8799/SSHNation/master/proxy3128.py > /dev/null 2> /dev/null
+history -c
+fi
+
+sleep 2
+
+echo ""
+
+echo -e "\033[1;31mRESPONDA ALGUMAS PERGUNTAS \033[0m"
+echo ""
+
+echo -e "\033[1;32mAbrir porta 80? \033[0m"
+read -p "[s/n]: " -e -i s port80
+
+echo -e "\033[1;32mAbrir porta 8080? \033[0m"
+read -p "[s/n]: " -e -i s port8080
+
+echo -e "\033[1;32mAbrir porta 8799? \033[0m"
+read -p "[s/n]: " -e -i n port8799
+
+echo -e "\033[1;32mAbrir porta 3128? \033[0m"
+read -p "[s/n]: " -e -i s port3128
+
+service squid3 stop > /dev/null 2> /dev/null
+service squid stop > /dev/null 2> /dev/null
+service ssh restart > /dev/null 2> /dev/null
+service sshd restart > /dev/null 2> /dev/null
+
+if [[ "$port80" = 's' ]]; then
+chmod a+x /bin/proxy.py && nohup python /bin/proxy.py > proxy.txt &
+fi
+
+if [[ "$port8080" = 's' ]]; then
+chmod a+x /bin/proxy8080.py && nohup python /bin/proxy8080.py > proxy8080.txt &
+fi
+
+
+if [[ "$port8799" = 's' ]]; then
+chmod a+x /bin/proxy8799.py && nohup python /bin/proxy8799.py > proxy8799.txt &
+fi
+
+
+if [[ "$port3128" = 's' ]]; then
+chmod a+x /bin/proxy3128.py && nohup python /bin/proxy3128.py > proxy3128.txt &
+fi
+echo ""
+echo -e "\033[1;32mTudo pronto! \n\nCanal: http://t.me/rdysoftware \033[0m"
+
+}
+
+rdystartgettunnel(){
+if [ -e "/bin/server8799.py" ] ; then
+echo -e "\033[1;32mPort 8799 OK √ \033[0m"
+history -c
+else
+echo -e "\033[1;31mBaixando arquivos para porta 8799...\033[0m"
+wget -P /bin https://raw.githubusercontent.com/RDY8799/SSHNation/master/server8799.py > /dev/null 2> /dev/null
+history -c
+fi
+
+echo ""
+
+echo -e "\033[1;33mApenas a porta 8799 a ser aberta.\n\nEdite o arquivo encontrado em \033[1;31m/bin/server8799.py\033[1;33m e coloque a porta desejada \033[0m"
+
+echo ""
+
+echo -e "\033[1;32mIniciar GetTunnel na porta 8799? \033[0m"
+read -p "[s/n]: " -e -i n server8799
+
+
+if [[ "$server8799" = 's' ]]; then
+chmod a+x /bin/server8799.py && nohup python /bin/server8799.py > server8799.txt &
+fi
+}
+
+rdystartport(){
+
+echo ""
+echo -e "\033[1;32mSeu arquivo deve está em \033[1;31m/bin \033[0m"
+echo ""
+echo -e "\033[1;32mCertifique-se que não exista a mesma porta aberta no servidor \033[0m"
+echo ""
+echo -e "\033[1;36mNome do arquivo Python: \033[0m"; read -p ""  filepy
+echo ""
+
+if [ ! -f "/bin/$filepy" ]; then
+echo -e "\033[1;31m$filepy não encontrado em /bin \033[0m"
+else
+chmod a+x /bin/$filepy && nohup python /bin/$filepy > $filepy.txt &
+fi
+
+echo -e "\033[1;32mConcluído! \033[0m"
+
+echo ""
+}
+
+rdygettunnel(){
+clear
+echo ""
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;32m[1] Iniciar GetTunnel (Default port 8799)\033[0m";
+echo -e "\033[1;32m[2] Iniciar em novas portas \033[0m";
+echo -e "\033[1;36m[01-02]\033[0m"; read -p ": "  option
+
+case $option in
+
+1 | 01) rdystartgettunnel ;;
+2 | 02) rdystartport ;;
+*) "Unknown option." ; echo ; sleep 2 ; RDY ;;
+   esac
+
+}
+
+rdybadvpn(){
+
+clear
+echo ""
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;32mConfigurando, aguarde...\033[0m"
+
+apt-get install -y gcc >/dev/null 2>/dev/null
+apt-get install -y make >/dev/null 2>/dev/null
+apt-get install -y g++ >/dev/null 2>/dev/null
+apt-get install -y openssl >/dev/null 2>/dev/null
+apt-get install -y build-essential >/dev/null 2>/dev/null
+apt-get install -y cmake >/dev/null 2>/dev/null
+
+echo -e "\033[1;32mBaixando arquivos BadVPN..."; cd
+wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/badvpn/badvpn-1.999.128.tar.bz2 -o /dev/null
+history -c
+tar -xf badvpn-1.999.128.tar.bz2
+echo -e "Iniciando configurações..."
+mkdir /etc/badvpn-install
+cd /etc/badvpn-install
+cmake ~/badvpn-1.999.128 -DBUILD_NOTHING_BY_DEFAULT=1 -DBUILD_UDPGW=1 >/dev/null 2>/dev/null
+echo -e "\033[1;32mConcluindo... \033[0m"
+make install
+clear
+
+rm -rf /etc/badvpn-install
+cd ; rm -rf badvpn.sh badvpn-1.999.128/ badvpn-1.999.128.tar.bz2 >/dev/null 2>/dev/null
+
+clear
+
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;32m√ Concluído! √ \033[0m"
+echo ""
+
+}
+
+rdyspeedtest(){
+
+clear
+echo ""
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+if [ -e "/bin/speedtest.py" ] ; then
+echo -e "\033[1;32mSpeedTest OK √ \033[0m"
+echo ""
+history -c
+else
+echo -e "\033[1;31mBaixando arquivos necessários...\033[0m"
+wget -P /bin https://raw.githubusercontent.com/RDY8799/SSHNation/master/speedtest.py > /dev/null 2> /dev/null
+echo ""
+history -c
+fi
+
+echo -e "\033[42;1;37mSPEEDTEST\033[0m"
+echo ""
+echo -e "\033[1;31mIniciando...\033[0m"
+ping=$(ping -c1 google.com |awk '{print $8 $9}' |grep -v loss |cut -d = -f2 |sed ':a;N;s/\n//g;ta')
+echo ""
+echo -e "\033[1;36mPing: \033[1;32m$ping\033[0m"
+velo=$(speedtest.py |grep load:)
+echo "$velo"
+
+echo ""
+
+}
+
+rdyusermanager(){
+rdymenu
+}
+
+#####
+
+rdyadvanced(){
+
+clear
+echo ""
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;32m[1] Atualizar pacotes\033[0m";
+echo -e "\033[1;32m[2] Atualizar SO \033[0m";
+echo -e "\033[1;36m[01-02]\033[0m"; read -p ": "  option
+
+case $option in
+
+1 | 01) 
+echo ""
+echo -e "\033[1;36mA atualização irá atualiza a lista de pacotes do seu sistema e atualizar todos os seus pacotes instalados para suas versões mais recentes.\033[0m"
+  read -p "ENTER" enter
+  sleep 3s
+  apt-get update
+  apt-get dist-upgrade
+  apt-get update -y
+  apt-get upgrade -y
+  apt-get dist-upgrade -y
+  echo -e "\033[1;36m
+SISTEMA ESTA ATUALIZADO!
+  \033[0m"
+  exit ;;
+2 | 02) 
+echo ""
+echo -e "\033[1;36m Isso irá atualizar seu SO para a versão mais recente, \033[1;31mse tiver nova versão. \033[1;36mNão prossiga se não souber o que está fazendo. A atualização pode demorar muito, seja paciente. Para continuar aperte\033[0m"; read -p " ENTER" enter
+do-release-upgrade
+  exit ;;
+*) "Unknown option." ; echo ; sleep 2 ; RDY ;;
+   esac
+
+}
+########
+
+rdysysteminfo(){
+
+clear
+history -c
+echo ""
+
+echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+if [ ! /proc/cpuinfo ]
+then
+echo -e "\033[1;31mError Getting System Information.\033[0m"
+exit 0
+fi
+if [ ! /etc/issue.net ]
+then
+echo -e "\033[1;31mError Getting System Information.\033[0m"
+exit 0
+fi
+if [ ! /proc/meminfo ]
+then
+echo -e "\033[1;31mError Getting System Information.\033[0m"
+exit 0
+fi
+
+system=$(cat /etc/issue.net)
+based=$(cat /etc/*release | grep ID_LIKE | awk -F "=" '{print $2}')
+processor=$(cat /proc/cpuinfo | grep "model name" | uniq | awk -F ":" '{print $2}')
+cpus=$(cat /proc/cpuinfo | grep processor | wc -l)
+
+if [ "$system" ]
+then
+echo -e "\033[1;33mSystem:\033[1;30m $system \033[0m"
+echo ""
+else
+echo -e "\033[1;31mSystem: Not Available\033[0m"
+fi
+if [ "$based" ]
+then
+echo -e "\033[1;33mIts a\033[1;30m $based-like\033[0m"
+echo ""
+else
+echo -e "\033[1;31mBased system not Available\033[0m"
+fi
+if [ "$processor" ]
+then
+echo -e "\033[1;33mProcessor:\033[1;30m $processor x$cpus\033[0m"
+echo ""
+else
+echo -e "\033[1;31mProcessor: Not Available\033[0m"
+fi
+clock=$(lscpu | grep "CPU MHz" | awk '{print $3}')
+if [ "$clock" ]
+then
+echo -e "\033[1;33mClock\033[1;30m $clock MHz \033[0m"
+echo ""
+else
+echo -e "\033[1;31mClock: Not Available\033[0m"
+fi
+echo -e "\033[1;33mCPU Usage:\033[1;30m$(ps aux  | awk 'BEGIN { sum = 0 }  { sum += sprintf("%f",$3) }; END { printf " " "%.2f" "%%", sum}')\033[0m"
+
+totalram=$(free | grep Mem | awk '{print $2}')
+usedram=$(free | grep Mem | awk '{print $3}')
+freeram=$(free | grep Mem | awk '{print $4}')
+swapram=$( cat /proc/meminfo | grep SwapTotal | awk '{print $2}')
+echo -e "\033[1;33mRAM TOTAL: \033[1;30m$(($totalram / 1024))MB \033[1;33mUSED: \033[1;30m$(($usedram / 1024))MB \033[1;33mFREE: \033[1;30m$(($freeram / 1024))MB \033[1;33mSWAP: \033[1;30m$(($swapram / 1024))MB \033[0m"
+echo ""
+echo -e "\033[1;33mUptime:\033[1;30m$(uptime) \033[0m"
+echo ""
+echo -e "\033[1;33mHostname:\033[1;30m $(hostname) \033[0m"
+echo ""
+echo -e "\033[1;33mIP:\033[1;30m $(ip addr | grep inet | grep -v inet6 | grep -v "host lo" | awk '{print $2}' | awk -F "/" '{print $1}')\033[0m"
+echo ""
+echo -e "\033[1;33mKernel Version:\033[1;30m $(uname -r) \033[0m"
+echo ""
+echo -e "\033[1;33mArchitecture:\033[1;30m $(uname -m) \033[0m"
+echo ""
+
+}
+
+rdyhelp(){
+
+clear
+echo -e "\033[1;32m© RDY SOFTWARE | 2016 - 2017 All rights reserved\033[0m";
+echo ""
+
+echo -e "\033[1;32m Type to direct command: \n\n\033[1;36mRDY + option number\nEx: RDY 10\nTo Help.\033[0m"
+
+echo ""
+
+echo -e "\033[1;32mEscolha a opção e realize a operação desejada\n\nPara mais informações acesse:\n\033[1;36mwww.google.com\n\033[0m"
+
+}
+
+#ip=$(facter ipaddress_eth0)
+#apt-get install facter
+
+#################
+
+testes(){
+clear
+echo ""
+pt="$1"
+echo -e "\033[1;33mVERIFICANDO PORTA \033[1;31m$pt\033[0m"
+sleep 3s
+if [[ -e /etc/ssh/sshd_config ]]; then
+var1=$(cat /etc/ssh/sshd_config |egrep -o "Port $pt" |wc -l)
+ if [ "$var1" = "0" ]; then
+echo -e "\033[1;33mSSH OK!\033[0m"
+sleep 3s
+else
+echo -e "\033[1;33mPORTA $pt USADA PELO SSH\033[0m"
+sleep 6s
+addportas
+exit
+ fi
+fi
+if [[ -e /etc/default/dropbear ]]; then
+var2=$(cat /etc/default/dropbear |egrep -o "$pt " |wc -l)
+ if [ "$var2" = "0" ]; then
+echo -e "\033[1;33mDROPBEAR OK!\033[0m"
+sleep 3s
+else
+echo -e "\033[1;33mPORTA $pt USADA PELO DROPBEAR\033[0m"
+sleep 6s
+addportas
+exit
+ fi
+fi
+if [[ -e /etc/squid/squid.conf ]]; then
+var3=$(cat /etc/squid/squid.conf |egrep -o "http_port $pt" |wc -l)
+ if [ "$var3" = "0" ]; then
+echo -e "\033[1;33mSQUID OK!\033[0m"
+sleep 3s
+else
+echo -e "\033[1;33mPORTA $pt USADA PELO SQUID\033[0m"
+sleep 6s
+addportas
+exit
+ fi
+fi
+if [[ -e /etc/squid3/squid.conf ]]; then
+var4=$(cat /etc/squid3/squid.conf |egrep -o "http_port $pt" |wc -l)
+ if [ "$var4" = "0" ]; then
+echo -e "\033[1;33mSQUID OK!\033[0m"
+sleep 3s
+else
+echo -e "\033[1;33mPORTA $pt USADA PELO SQUID\033[0m"
+sleep 6s
+addportas
+exit
+ fi
+fi
+}
+###################################
+
+#################
+
+
+if [[ $1 == "" ]]
+
+then
+
+if [ ! -f "/etc/default/dropbear" ]; then
+rdydrop="X"
+else
+rdydrop="OK"
+fi
+
+if [ ! -f "/etc/squid3/squid.conf" ]; then
+rdysquid="X"
+else
+rdysquid="OK"
+fi
+
+if [ ! -f "/root/proxy.py" ]; then
+rdysocks="X"
+else
+rdysocks="OK"
+fi
+
+if [ ! -f "/root/server.py" ]; then
+rdyget="X"
+else
+rdyget="OK"
+fi
+
+if [ ! -f "/bin/speedtest.py" ]; then
+rdyspeed="X"
+else
+rdyspeed="OK"
+fi
+
+if [ ! -f "/bin/rdymenu" ]; then
+rdymanager="X"
+else
+rdymanager="OK"
+fi
+
+udpvar=$(netstat -nlpt | egrep -o udpgw)
+if [ "$udpvar" = "" ]; then
+rdybad="X"
+else
+rdybad="OK"
+fi
+
+echo -e "\033[1;32m© RDY SOFTWARE | 2016 - 2017 All rights reserved\033[0m";
+echo "";
+echo "----------------------------------------------------";
+echo -e "\033[1;32m -> \033[01;37mIP:\033[1;31m $ip\033[0m";
+echo "";
+echo -e "\033[1;32m -> \033[01;37mOPERATIONAL SYSTEM:\033[1;31m $(cat /etc/so)\033[0m";
+echo "----------------------------------------------------";
+echo -e "\033[1;36m[ # CTRL + C to exit # ]\033[0m";
+echo "";
+echo -e "\033[1;33m[01] OpenSSH   \033[1;36m$rdysquid \033[0m";
+echo -e "\033[1;33m[02] DropBear   \033[1;36m$rdydrop\033[0m";
+echo -e "\033[1;33m[03] SOCKS5   \033[1;36m$rdysocks \033[0m";
+echo -e "\033[1;33m[04] GetTunnel   \033[1;36m$rdyget \033[0m";
+echo -e "\033[1;33m[05] BadVPN   \033[1;36m$rdybad\033[0m";
+echo -e "\033[1;33m[06] SpeedTest   \033[1;36m$rdyspeed\033[0m";
+echo "";
+echo -e "\033[1;32m[07] User manager   \033[1;36m$rdymanager\033[0m";
+echo -e "\033[1;32m[08] System info \033[0m"
+echo -e "\033[1;32m[09] Reboot \033[0m"
+echo -e "\033[1;32m[10] Advanced \033[0m"
+echo -e "\033[1;32m[11] Help \033[0m";
+echo -e "\033[1;32m[12] Uninstall \033[0m";
+echo -e "\033[1;36m[01-12]\033[0m"; read -p ": "  option
+
+else
+option=$1
+fi
+
+case $option in
+
+1 | 01) rdyopenssh ;;
+2 | 02) rdydropbear ;;
+3 | 03) rdysocks ;;
+4 | 04) rdygettunnel ;;
+5 | 05) rdybadvpn ;;
+6 | 06) rdyspeedtest ;;
+7 | 07) rdyusermanager ;;
+8 | 08) rdysysteminfo ;;
+9 | 09) reboot ;;
+10) rdyadvanced ;;
+11) rdyhelp ;;
+12) rm -rf /bin/RDY* /dev/null 2> /dev/null
+    rm -rf /bin/speedtest.py /dev/null 2> /dev/null
+    rm -rf /bin/rdy* /dev/null 2> /dev/null
+    rm -rf /bin/proxy* /dev/null 2> /dev/null
+    rm -rf /bin/rdymenu /dev/null 2> /dev/null
+    rm -rf /bin/server* /dev/null 2> /dev/null
+    rm -rf /bin/*.rdy /dev/null 2> /dev/null
+
+echo ""
+
+echo -e "\033[1;32m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+
+echo ""
+
+echo -e "\033[1;32m Uninstalled! \033[0m" ;;
+ *) "Unknown option." ; echo "" ; sleep 2 ; bash RDY ;;
+   esac
