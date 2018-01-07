@@ -49,28 +49,39 @@ fi
 # RDY FUNCTIONS
 
 rdylampsettings(){
+echo -e \033[1;32m Installing Apache... \033[0m";
+apt-get install apache2 > /dev/null 2> /dev/null
 
-apt-get install apache2
+echo -e \033[1;32m Installing MySQL Server... \033[0m";
 apt-get install mysql-server php5-mysql
+
+clear
+echo -e \033[1;32m Setting MySQL Server... \033[0m";
 mysql_install_db
 mysql_secure_installation
+
+echo -e \033[1;32m Intalling PHP5...\033[0m";
 apt-get install php5 libapache2-mod-php5 php5-mcrypt
-rm /etc/apache2/mods-enabled/dir.conf
-echo "<IfModule mod_dir.c>
-    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
-</IfModule>" > /etc/apache2/mods-enabled/dir.conf
+
+echo -e \033[1;32m Configuring Apache... \033[0m";
+rm /etc/apache2/mods-enabled/dir.conf > /dev/null
+
+echo "<IfModule mod_dir.c> DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm </IfModule>" > /etc/apache2/mods-enabled/dir.conf
+
+echo -e \033[1;32m Restarting Apache...\033[0m";
 service apache2 restart
 
 echo "<?php
 phpinfo();
 ?>" > /var/www/html/info.php
-
+clear
+echo "";
 echo -e "\033[1;32mFinish √\033[0m";
 echo "";
 echo "Test: http://$ip/info.php"
 echo "";
 echo "SOURCE: https://www.digitalocean.com/community/tutorials/como-instalar-a-pilha-linux-apache-mysql-php-lamp-no-ubuntu-14-04-pt";
-
+echo "";
 
 }
 
@@ -690,10 +701,12 @@ echo -e "\033[1;32m[08] System info \033[0m"
 echo -e "\033[1;32m[09] Reboot \033[0m"
 echo -e "\033[1;32m[10] Advanced \033[0m"
 echo -e "\033[1;32m[11] Help \033[0m";
-echo -e "\033[1;32m[12] Uninstall \033[0m";
 echo "";
-echo -e "\033[1;32m[13] Web - configuration LAMP \033[0m";
-echo -e "\033[1;36m[01-13]\033[0m"; read -p ": "  option
+echo -e "\033[1;32m[12] Web - configuration LAMP \033[0m";
+echo " ";
+echo "";
+echo -e "\033[1;32m[404] Uninstall Script\033[0m";
+echo -e "\033[1;36m[01-12]\033[0m"; read -p ": "  option
 
 else
 option=$1
@@ -712,7 +725,8 @@ case $option in
 9 | 09) reboot ;;
 10) rdyadvanced ;;
 11) rdyhelp ;;
-12) rm -rf /bin/RDY* /dev/null 2> /dev/null
+12) rdylampsettings ;;
+404) rm -rf /bin/RDY* /dev/null 2> /dev/null
     rm -rf /bin/speedtest.py /dev/null 2> /dev/null
     rm -rf /bin/rdy* /dev/null 2> /dev/null
     rm -rf /bin/proxy* /dev/null 2> /dev/null
@@ -727,6 +741,5 @@ echo -e "\033[1;32m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
 echo ""
 
 echo -e "\033[1;32m Uninstalled! \033[0m" ;;
-13) rdylampsettings ;;
  *) "Unknown option." ; echo "" ; sleep 2 ; bash RDY ;;
    esac
