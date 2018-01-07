@@ -49,13 +49,14 @@ fi
 # RDY FUNCTIONS
 
 rdylampsettings(){
+clear
+echo " ";
 echo -e "\033[1;32m Installing Apache... \033[0m";
 apt-get install apache2
 
 echo -e "\033[1;32m Installing MySQL Server... \033[0m";
 apt-get install mysql-server php5-mysql
 
-clear
 echo -e "\033[1;32m Setting MySQL Server... \033[0m";
 mysql_install_db
 mysql_secure_installation
