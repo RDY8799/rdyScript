@@ -21,7 +21,7 @@ fi
 
 # SETTINGS
 
-about="# © RDY SOFTWARE | 2016 - 2018 All rights reserved "
+about="© RDY SOFTWARE | 2016 - 2018 All rights reserved";
 
 cat -n /etc/issue |grep 1 |cut -d' ' -f6,7,8 |sed 's/1//' |sed 's/	//' > /etc/so 
 
@@ -727,6 +727,6 @@ echo -e "\033[1;32m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
 echo ""
 
 echo -e "\033[1;32m Uninstalled! \033[0m" ;;
-13) rdylampsettings
+13) rdylampsettings ;;
  *) "Unknown option." ; echo "" ; sleep 2 ; bash RDY ;;
    esac
