@@ -49,26 +49,26 @@ fi
 # RDY FUNCTIONS
 
 rdylampsettings(){
-echo -e \033[1;32m Installing Apache... \033[0m";
+echo -e "\033[1;32m Installing Apache... \033[0m";
 apt-get install apache2 > /dev/null 2> /dev/null
 
-echo -e \033[1;32m Installing MySQL Server... \033[0m";
+echo -e "\033[1;32m Installing MySQL Server... \033[0m";
 apt-get install mysql-server php5-mysql
 
 clear
-echo -e \033[1;32m Setting MySQL Server... \033[0m";
+echo -e "\033[1;32m Setting MySQL Server... \033[0m";
 mysql_install_db
 mysql_secure_installation
 
-echo -e \033[1;32m Intalling PHP5...\033[0m";
+echo -e "\033[1;32m Intalling PHP5...\033[0m";
 apt-get install php5 libapache2-mod-php5 php5-mcrypt
 
-echo -e \033[1;32m Configuring Apache... \033[0m";
+echo -e "\033[1;32m Configuring Apache... \033[0m";
 rm /etc/apache2/mods-enabled/dir.conf > /dev/null
 
 echo "<IfModule mod_dir.c> DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm </IfModule>" > /etc/apache2/mods-enabled/dir.conf
 
-echo -e \033[1;32m Restarting Apache...\033[0m";
+echo -e "\033[1;32m Restarting Apache...\033[0m";
 service apache2 restart
 
 echo "<?php
