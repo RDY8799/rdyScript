@@ -50,7 +50,7 @@ fi
 
 rdylampsettings(){
 echo -e "\033[1;32m Installing Apache... \033[0m";
-apt-get install apache2 > /dev/null 2> /dev/null
+apt-get install apache2
 
 echo -e "\033[1;32m Installing MySQL Server... \033[0m";
 apt-get install mysql-server php5-mysql
