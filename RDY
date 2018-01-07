@@ -21,6 +21,7 @@ fi
 
 # SETTINGS
 
+about="# © RDY SOFTWARE | 2016 - 2018 All rights reserved "
 
 cat -n /etc/issue |grep 1 |cut -d' ' -f6,7,8 |sed 's/1//' |sed 's/	//' > /etc/so 
 
@@ -47,8 +48,34 @@ fi
 
 # RDY FUNCTIONS
 
+rdylampsettings(){
+
+apt-get install apache2
+apt-get install mysql-server php5-mysql
+mysql_install_db
+mysql_secure_installation
+apt-get install php5 libapache2-mod-php5 php5-mcrypt
+rm /etc/apache2/mods-enabled/dir.conf
+echo "<IfModule mod_dir.c>
+    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>" > /etc/apache2/mods-enabled/dir.conf
+service apache2 restart
+
+echo "<?php
+phpinfo();
+?>" > /var/www/html/info.php
+
+echo -e "\033[1;32mFinish √\033[0m";
+echo "";
+echo "Test: http://$ip/info.php"
+echo "";
+echo "SOURCE: https://www.digitalocean.com/community/tutorials/como-instalar-a-pilha-linux-apache-mysql-php-lamp-no-ubuntu-14-04-pt";
+
+
+}
+
 rdyconfigdropbear(){
-echo "# © RDY SOFTWARE | 2016 - 2017 All rights reserved";
+echo "$about";
 
 }
 
@@ -298,7 +325,7 @@ echo ""
 rdygettunnel(){
 clear
 echo ""
-echo -e "\033[4;36m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
+echo -e "\033[4;36m$about \033[0m"
 
 echo ""
 
@@ -664,7 +691,9 @@ echo -e "\033[1;32m[09] Reboot \033[0m"
 echo -e "\033[1;32m[10] Advanced \033[0m"
 echo -e "\033[1;32m[11] Help \033[0m";
 echo -e "\033[1;32m[12] Uninstall \033[0m";
-echo -e "\033[1;36m[01-12]\033[0m"; read -p ": "  option
+echo "";
+echo -e "\033[1;32m[13] Web - configuration LAMP \033[0m";
+echo -e "\033[1;36m[01-13]\033[0m"; read -p ": "  option
 
 else
 option=$1
@@ -698,5 +727,6 @@ echo -e "\033[1;32m © RDY SOFTWARE | 2016 - 2017 All rights reserved \033[0m"
 echo ""
 
 echo -e "\033[1;32m Uninstalled! \033[0m" ;;
+13) rdylampsettings
  *) "Unknown option." ; echo "" ; sleep 2 ; bash RDY ;;
    esac
