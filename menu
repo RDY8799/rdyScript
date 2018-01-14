@@ -52,8 +52,8 @@ then
 echo -e "\033[1;31m\n(ERROR 01) $error\033[0m"
 rm $rdy > /dev/null 2> /dev/null
 else
-echo -e "\033[1;31m Libere a instalação do script para este servidor no aplicativo!\n\nMais informações, telegram: @rdysoftware \033[0m";
-exit
+#echo -e "\033[1;31m Libere a instalação do script para este servidor no aplicativo!\n\nMais informações, telegram: @rdysoftware \033[0m";
+#exit
 fi
 if [[ `grep -c "^$senha" $rdy` -ne 1 ]]
 then
