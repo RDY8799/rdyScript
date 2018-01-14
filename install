@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# © RDY SOFTWARE | 2016 - 2018 All rights reserved
+
+cd
+if [ $(id -u) -eq 0 ]
+then
+        clear
+else
+        if echo $(id) |grep sudo > /dev/null
+        then
+        clear
+        echo "Você não é root"
+        echo "Seu usuário está no grupo sudo"
+        echo -e "Para virar root e fazer a instalação execute \033[1;31msudo su\033[0m"
+        exit
+        else
+        clear
+        echo -e "Você pecisa está como root para poder fazer a instalção. Para tornar-se root execute \033[1;31msu\033[0m e digite sua senha root"
+        exit
+        fi
+fi
+
+repo="scriptRdy";
+
+if yum -y update
+then
+echo -e "\033[1;36mAtualizando pacotes...\033[0m";
+yum -y update > /dev/null 2> /dev/null
+yum -y install git > /dev/null 2> /dev/null
+echo -e "\033[1;36mBaixando arquivos... \033[0m";
+git clone https://github.com/RDY8799/$repo.git > /dev/null
+clear
+cd $repo
+rm -rf README.md
+rm -rf install
+for arqs in `ls`
+do
+rm /bin/$arqs 2> /dev/null
+mv $arqs /bin
+chmod +x /bin/$arqs
+done
+echo " ";
+echo -e "\033[1;32m√ Menu de configuração instalado com sucesso! \n\n\033[1;36mComando inicial: \033[1;31mRDY\n\n\033[1;36mComando secundário: \033[1;31mmenu\033[0m";
+echo ""
+echo -e "\033[1;32m © RDY SOFTWARE | 2016 - 2018 All rights reserved \033[0m";
+else
+echo -e "\033[1;36mAtualizando pacotes...\033[0m";
+apt-get update > /dev/null 2> /dev/null
+apt-get install -y git > /dev/null 2> /dev/null
+echo -e "\033[1;36mBaixando arquivos... \033[0m";
+git clone https://github.com/RDY8799/$repo.git > /dev/null
+clear
+cd $repo
+rm -rf README.md
+rm -rf install
+for arqs in `ls`
+do
+rm /bin/$arqs 2>/dev/null
+mv $arqs /bin
+chmod +x /bin/$arqs
+done
+echo " ";
+echo -e "\033[1;32m√ Menu de configuração instalado com sucesso! \n\n\033[1;36mComando inicial: \033[1;31mRDY\n\n\033[1;36mComando secundário: \033[1;31mmenu\033[0m";
+echo ""
+echo -e "\033[1;32m © RDY SOFTWARE | 2016 - 2018 All rights reserved \033[0m";
+fi
+cd
+rm -rf install 2> /dev/null
+rm -rf $repo 2> /dev/null

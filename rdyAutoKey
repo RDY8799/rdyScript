@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# © RDY SOFTWARE | 2016 - 2018 All rights reserved
+
+# Autorirar instalação
+
+ip=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+if [[ "$ip" = "" ]]; then
+ip=$(wget -qO- ipv4.icanhazip.com)
+fi
+
+file="rdyAutoKey";
+
+rdy="/etc/a/b/c/d/e/f/g/h/i/j/k/0/1/2/3/4/5/6/7/8/9/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdy/$ip";
+
+if [ -d /etc/a/b/c/d/e/f/g/h/i/j/k/0/1/2/3/4/5/6/7/8/9/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdy ]
+then
+echo ""
+else
+mkdir -p /etc/a/b/c/d/e/f/g/h/i/j/k/0/1/2/3/4/5/6/7/8/9/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdy
+fi
+
+read -p "" code
+
+echo "$code" > $rdy
+
+exit
+
+find / -name '$file' -exec rm {} \; > /dev/null 2> /dev/null
+
+wget https://raw.githubusercontent.com/RDY8799/SSHNation/master/rdyinstall && chmod 711 rdy* && bash rdyinstall
+
+clear
+
+wget https://raw.githubusercontent.com/RDY8799/rdyScript/master/install && chmod 711 inst* && bash install
