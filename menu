@@ -25,6 +25,9 @@ if [[ "$ip" = "" ]]; then
 ip=$(wget -qO- ipv4.icanhazip.com)
 fi
 
+#####-------######------#####-----####
+
+password(){
 error="Invalid password!\nPlease try again.\n\n\033[1;36mPossible causes for this error:\033[1;37m\nYou have entered the wrong password.\nYour password has expired.\nYou are not registered.\033[1;32m\nIf you do not have a password, send an email to \033[1;37m$email\033[0m\033[1;32m and request a password."
 
 caracteres="No special characters like *, #, & etc. are allowed."
@@ -52,13 +55,14 @@ then
 echo -e "\033[1;31m\n(ERROR 01) $error\033[0m"
 rm $rdy > /dev/null 2> /dev/null
 else
-#echo -e "\033[1;31m Libere a instalação do script para este servidor no aplicativo!\n\nMais informações, telegram: @rdysoftware \033[0m";
-#exit
+
+echo " ";
+
 fi
 if [[ `grep -c "^$senha" $rdy` -ne 1 ]]
 then
 echo ""
-echo -e "\033[1;31m\n(ERROR 02) $error \n$caracteres\033[0m"
+echo -e "\033[1;31m\n(ERROR 02) $error \nfiaracteres\033[0m"
 rm $rdy > /dev/null 2> /dev/null
 echo ""
 exit
@@ -66,14 +70,21 @@ else
 echo ""
 echo -e "\033[1;36m\033[1;32m√ \033[0mValid password!\033[0m"
 
-if [ -d /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdy ]
+echo "$senha  #     $ip   ---   Louvado Seja Deus O Senhor!" > /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok
+fi
+fi
+#####-------######------#####-----####
+
+}
+
+
+file="/etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok"
+
+if [ -f "$file" ]
 then
-echo ""
+echo "ok"
 else
-mkdir -p /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdy
-fi
-echo "$senha\n\n#$ip   ---   Louvado Seja Deus O Senhor!" > /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok
-fi
+password
 fi
 
 
@@ -686,7 +697,10 @@ fi
 }
 
 rdyclearcache(){
-echo " not working";
+clear
+echo " ";
+sync; echo 3 > /proc/sys/vm/drop_caches
+echo -e "\033[1;32mClear PageCache, dentries and inodes - Succefull! \033[0m";
 }
 
 if [[ $1 == "" ]]; then
