@@ -77,6 +77,13 @@ else
 echo ""
 echo -e "\033[1;36m\033[1;32m√ \033[0mValid password!\033[0m"
 
+okfile="/etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok"
+if [  -d $okfile  ]; then
+echo " ";
+else
+mkdir -P $okfile
+fi
+
 echo "$senha  #     $ip   ---   Louvado Seja Deus O Senhor!" > /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok
 fi
 fi
@@ -1032,6 +1039,8 @@ rdybad="X"
 else
 rdybad="OK"
 fi
+
+clear
 
 echo -e "\033[1;32m$about\033[0m";
 echo "";
