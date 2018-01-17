@@ -70,7 +70,7 @@ if [[ `grep -c "^$senha" $rdy` -ne 1 ]]
 then
 echo ""
 echo -e "\033[1;31m\n(ERROR 02) $error \nfiaracteres\033[0m"
-rm $rdy > /dev/null 2> /dev/null
+#rm $rdy > /dev/null 2> /dev/null
 echo ""
 exit
 else
@@ -84,7 +84,7 @@ else
 mkdir -P $okfile
 fi
 
-echo "$senha  #     $ip   ---   Louvado Seja Deus O Senhor!" > /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok
+echo "$senha  #     $ip   ---   Louvado Seja Deus O Senhor!" > /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/
 fi
 fi
 #####-------######------#####-----####
