@@ -27,7 +27,7 @@ fi
 
 #####-------######------#####-----####
 
-password(){
+passwordrdy(){
 error="Invalid password!\nPlease try again.\n\n\033[1;36mPossible causes for this error:\033[1;37m\nYou have entered the wrong password.\nYour password has expired.\nYou are not registered.\033[1;32m\nIf you do not have a password, send an email to \033[1;37m$email\033[0m\033[1;32m and request a password."
 
 caracteres="No special characters like *, #, & etc. are allowed."
@@ -62,7 +62,7 @@ fi
 if [[ `grep -c "^$senha" $rdy` -ne 1 ]]
 then
 echo ""
-echo -e "\033[1;31m\n(ERROR 02) $error \nfiaracteres\033[0m"
+echo -e "\033[1;31m\n(ERROR 02) $error \n$caracteres\033[0m"
 rm $rdy > /dev/null 2> /dev/null
 echo ""
 exit
@@ -74,7 +74,7 @@ okfile="/etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/"
 if [  -d $okfile  ]; then
 echo " ";
 else
-mkdir -P $okfile
+mkdir -p $okfile
 fi
 
 echo "$senha  #     $ip   ---   Louvado Seja Deus O Senhor!" > /etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok
@@ -82,16 +82,27 @@ fi
 fi
 #####-------######------#####-----####
 
+sleep 2
+
 }
 
 
 file="/etc/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/rdyOOOok"
 
-if [ -f "$file" ]
+if [ -e "$file" ]
 then
 echo "ok"
 else
-password
+passwordrdy
+fi
+
+if [ -e "/bin/limit" ]
+then
+echo ""
+else
+wget -P /bin https://github.com/RDY8799/RDYSOFTWARE/raw/master/limit
+
+clear
 fi
 
 
@@ -754,8 +765,12 @@ echo -e "\033[1;32m [21] Fazer backup de usuários \033[0m";
 echo -e "\033[1;32m [22] Restaurar usuários de backup \033[0m";
 echo -e "\033[1;32m [23] Adicionar Host - Útil na configuração OpenSSH \033[0m";
 echo -e "\033[1;32m [24] Apagar Host \033[0m";
+echo " ";
+echo -e "\033[1;36m* * *\033[0m";
+echo " ";
 echo -e "\033[1;32m [25] Sair \033[0m";
-echo -e "\033[1;36m[01-23]\033[0m"; read -p ": "  option
+echo " ";
+echo -e "\033[1;36m [01-25]\033[0m"; read -p ": "  option
 
 else
 option=$1
@@ -793,5 +808,5 @@ echo -e "\033[1;36m\033[1;32m√\033[0m A nova senha do usuário \033[4;32mroot\
 23) rdyaddhost ;;
 24) rdydeletehost ;;
 25) exit ;;
- *) "Unknown option." ; echo "" ; sleep 2 ; bash RDY ;;
+ *) "Unknown option." ; echo "" ; sleep 2 ; bash menu ;;
    esac
