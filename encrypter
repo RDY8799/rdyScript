@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#RDY SOFTWARE
+
+clear
+
+if [ -d "shc-3.8.7"   ]; then
+echo "OK";
+else
+apt-get install build-essential
+wget http://www.datsi.fi.upm.es/~frosal/sources/shc-3.8.7.tgz
+tar xvfz shc-3.8.7.tgz
+cd shc-3.8.7
+make
+
+echo "Comand: ./shc -v  ---  Verify that shc is installed properly. - out put = shc parse(-f): No source file specified";
+sleep 2
+./shc -v
+sleep 3
+clear
+exit
+fi
+
+cd shc-3.8.7/
+rdy=".x"
+echo -e "\033[1;36m © RDY SOFTWARE | 2016 - 2018 All rights reserved \033[0m";
+echo " ";
+echo -e "\033[4;31mCRIPTOGRAFAR ARQUIVOS - @rdysoftware \033[0m"
+echo ""
+echo -e "\033[1;36mNome do arquivo com seu respectivo diretório:\033[0m";
+read -p "" arquivo
+echo ""
+#./shc -f $arquivo
+
+./shc -v -r -T -f $arquivo
+
+echo -e "\033[1;32m√ Ok √ \033[0m"
+echo -e "\033[1;32mO arquivo se encontra em $arquivo$rdy \033[0m"
+
+sleep 3
+
+encrypter
+
