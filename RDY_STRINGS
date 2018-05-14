@@ -5,6 +5,7 @@
 
 
 # CORES
+pink="\033[7;49;95m"
 cverde="\033[1;32m"
 camarelo="\033[1;33m"
 cazul="\033[1;36m"
