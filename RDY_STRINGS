@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # ARQUIVO DE STRINGS & CORES
@@ -14,9 +15,6 @@ f="\033[0m"
 #####-------######------#####-----####
 ##### STRINGS PT Br - Por RDY SOFTWARE
 
-version="RDY SCRIPT - 2.0.0"
-about="© RDY SOFTWARE | 2016 - 2018 All rights reserved "
-email="rdysoftware@gmail.com"
 unkop="Opção inválida!"
 user="Usuário"
 password="Senha"
@@ -88,3 +86,14 @@ deleteallusers="Apagar todos os usuários criados (exceto root)"
 openvpnsettings="Configurações OpenVPN"
 menustyle="Estilo do menu"
 exit="Sair"
+
+
+
+
+
+#### DON'T CHANGE THIS NEXT LINE !!! ####
+version="RDY SCRIPT - 2.0.0"
+scriptversion="2.0.0"
+about="© RDY SOFTWARE | 2016 - 2018 All rights reserved "
+email="rdysoftware@gmail.com"
+##############################################
