@@ -16,6 +16,7 @@ f="\033[0m"
 #####-------######------#####-----####
 ##### STRINGS PT Br - Por RDY SOFTWARE
 
+typeoption="Escolha uma opção"
 unkop="Opção inválida!"
 user="Usuário"
 password="Senha"
@@ -90,11 +91,15 @@ exit="Sair"
 
 
 
-
+######################################################################
+##############################
+######################
+################
 
 #### DON'T CHANGE THIS NEXT LINE !!! ####
-version="RDY SCRIPT - 2.0.0b"
-scriptversion="2.0.0b"
+version="RDY SCRIPT - 2.0.0c"
+scriptversion="2.0.0c"
 about="© RDY SOFTWARE | 2016 - 2018 All rights reserved "
 email="rdysoftware@gmail.com"
+USERPROFILENAME=""
 ##############################################
